@@ -26,4 +26,4 @@ jobs:
         env:
           AIHUBMIX_API_KEY: ${{ secrets.AIHUBMIX_API_KEY }}
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
-        run: python main.py --force-run
+        run: python main.py --force-run --no-market-review
