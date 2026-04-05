@@ -1,25 +1,27 @@
-name: AIHubMix+飞书自动运行
+name: A股智能分析自动运行
 
 on:
-  workflow_dispatch:  # 允许手动点运行
+  workflow_dispatch:
+  schedule:
+    - cron: "30 1 * * 1-5"
 
 jobs:
-  run-ai:
+  run-stock:
     runs-on: ubuntu-latest
     steps:
-      - name: 拉取代码
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 设置Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.11"
 
-      - name: 安装依赖
+      - name: Install dependencies
         run: |
-          pip install openai requests
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: 运行AI并发送飞书
+      - name: Run stock analysis
         env:
           AIHUBMIX_API_KEY: ${{ secrets.AIHUBMIX_API_KEY }}
           FEISHU_WEBHOOK_URL: ${{ secrets.FEISHU_WEBHOOK_URL }}
